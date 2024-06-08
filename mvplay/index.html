@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>mvplay</title>
+    <style>
+        body {
+            background: #f0f0f0;
+        }
+        a:hover {
+            background: #e0e0ff;
+        }
+        div#main {
+            width: 500px;
+            max-width: 100%;
+            margin: 0px auto 100px auto;
+        }
+        iframe#mvframe {
+            width: 500px;
+            height: 280px;
+            max-width: 100%;
+            margin-top: 8px;
+            border: 1px solid gray;
+        }
+        @media screen and (max-width: 520px) {
+            iframe#mvframe {
+                height: 390px;
+            }
+        }
+        span.title {
+            font-size: 125%;
+            font-weight: bold;
+            padding-right: 8px;
+        }
+        div.caption {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        input[type="text"] {
+            width: 160px;
+            margin-left: 16px;
+        }
+    </style>
+    <script src="./mvplaylib.js"></script>
+    <script>
+        // タイトル検索
+        function query() {
+            const fps = '?fps=' + localStorage.getItem('fps');
+            const str = normalize(in_q.value);
+            const q = (str == '') ? '' : '&q=' + str;
+            location.replace(fps + q);
+        }
+        // 初期化処理
+        function on_load() {
+            const params = new URLSearchParams(location.search);
+            let fps = parseInt(params.get('fps') ?? localStorage.getItem('fps'));
+            if (fps != 15 && fps != 30) fps = 60;
+            s60.style.color = (fps == 60) ? 'black' : 'transparent';
+            s30.style.color = (fps == 30) ? 'black' : 'transparent';
+            s15.style.color = (fps == 15) ? 'black' : 'transparent';
+            localStorage.setItem('fps', fps);
+            let q = normalize(params.get('q') ?? '');
+            in_q.value = q;
+            if (q != '') q = '&q=' + q;
+            mvframe.src = 'mvplay.html?fps=' + fps + q;
+            a60.href = '?fps=60' + q;
+            a30.href = '?fps=30' + q;
+            a15.href = '?fps=15' + q;
+            document.title = 'mvplay ' + fps + 'fps ' + in_q.value;
+            if (location.protocol == 'file:') xchg.href += 'index.html';
+        }
+        // 読み込み完了時に初期化を実行
+        window.addEventListener('DOMContentLoaded', on_load);
+    </script>
+</head>
+<body>
+    <div id="main">
+        <span class="title">■mvplay v1.0</span>
+        <iframe id="mvframe" scrolling="no" allowfullscreen></iframe>
+        <div class="caption">●動画品質の選択</div>
+        <span id="s60">＞</span>[<a id="a60">中品質</a>] 60fps / 1280x720p / 2Mbps<br>
+        <span id="s30">＞</span>[<a id="a30">低品質</a>] 30fps / 640x360p / 360kbps<br>
+        <span id="s15">＞</span>[<a id="a15">無品質</a>] 15fps / 320x180p / 170kbps<br>
+        <div class="caption">●タイトル検索</div>
+        <input id="in_q" type="text">
+        <button type="button" onclick="query();">検索する</button>
+        <button type="button" onclick="in_q.value='';query();">クリア</button>
+    </div>
+</body>
+</html>

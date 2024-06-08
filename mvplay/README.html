@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>README - mvplay v1.0</title>
+<style>
+#main { margin: 0px auto 0px auto; width: 720px; }
+@media screen and (max-width: 760px) { div#main { width: 100%; } }
+a:hover { background-color: #e0e0ff; }
+span { float:left; width:160px; font-size:100%; }
+</style>
+</head>
+<body>
+<div id="main">
+<h1>■mvplay v1.0</h1>
+<ul>
+<li>分類： JavaScript で書いた動画再生ツール</li>
+<li>配布： <a href="https://bowlroll.net/file/319659">https://bowlroll.net/file/319659</a></li>
+</ul>
+<h2>●おもなファイル</h2>
+<ul>
+<li><span>index.html</span> // トップページ</li>
+<li><span>mvplay.html</span> // プレイヤー本体</li>
+<li><span>movie_data.js</span> // 動画登録のサンプル</li>
+</ul>
+<h2>●使い方</h2>
+<ul>
+<li>ブラウザで index.html を開くと、登録された動画を順次再生します</li>
+<li>movie_data.js に、自分の見たい動画を登録してください</li>
+<li>登録形式は、"動画URL|ニコ動ID|動画タイトル" をカンマ区切りで並べます</li>
+</ul>
+<ul>
+<li>動画URL は、公開された動画ファイルの生のURLです</li>
+<li>または、<b>ローカルファイルの相対パス</b> でもよいです</li>
+<li>というか元々このツールはローカルPCの動画を見るために作ったものです</li>
+</ul>
+<h2>●動画品質の選択</h2>
+<ul>
+<li>通信データ量を減らしたい人のための機能です</li>
+<li>異なる品質の動画を用意し、特定のフォルダに入れることで、品質を切り替えられます</li>
+<li>[中品質] - mv60 フォルダの動画を再生します</li>
+<li>[低品質] - mv30 フォルダの動画を再生します</li>
+<li>[無品質] - mv15 フォルダの動画を再生します</li>
+<li>たとえば <a href="https://bagof.crap.jp/coe/">https://bagof.crap.jp/coe/</a> みたいなフォルダ構成にします</li>
+</ul>
+<h2>●タイトル検索</h2>
+<ul>
+<li>キーワードを指定すると、それを含む動画タイトルを検索します</li>
+<li>「！キーワード」は、キーワードを含まない動画を検索します</li>
+<li>「キーワードＡ　＆　キーワードＢ」と書くと、AND 検索になります</li>
+<li>「キーワードＡ　｜　キーワードＢ」と書くと、OR 検索になります</li>
+</ul>
+<ul>
+<li>たとえば「Ｃ子 ｜ Ｄ子 ＆ ！寸劇」は、<br>
+<b>"Ｃ子" または "Ｄ子" を含む、"寸劇" でない動画</b><br>
+という意味になります（ANDとORの優先順位はなく、左から右に実行）</li>
+</ul>
+<ul>
+<li>なお「＆」は「＞」でもよく、「｜」は「＜」でもよいです</li>
+<li>「＞」は絞り込む、「＜」は拡張する、みたいなイメージです</li>
+</ul>
+<h2>●履歴</h2>
+<ul>
+<li>【2024/06/08】v1.0 作成</li>
+</ul>
+</div>
+</body>
+</html>
+

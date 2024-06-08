@@ -1,0 +1,15 @@
+const movie_data = [
+"https://bagof.crap.jp/coe/mv60/mv-zombie.mp4|sm43872853|C子で「ゾンビ・ディスコティーク」",
+"https://bagof.crap.jp/coe/mv60/mv-liar.mp4|sm42393744|B子C子D子で「ライアーダンス」",
+"https://bagof.crap.jp/coe/mv60/mv-lamb.mp4|sm42383639|D子で「Lamb.」",
+"https://bagof.crap.jp/coe/mv60/mv-exgirl.mp4|sm42205109|B子C子D子で「EX-GIRL」",
+"https://bagof.crap.jp/coe/mv60/mv-ussee.mp4|sm42132262|B子で「うっせえわ」",
+"https://bagof.crap.jp/coe/mv60/mv-misui.mp4|sm42104145|C子D子で「少女未遂」",
+"https://bagof.crap.jp/coe/mv60/mv-dokuzu.mp4|sm41451947|A子で「ド屑」",
+"https://bagof.crap.jp/coe/mv60/mv-kirai.mp4|sm40482201|B子で「キライ・キライ・ジガヒダイ！」",
+"https://bagof.crap.jp/coe/mv60/mv-saiban.mp4|sm40407390|B子で「恋愛裁判」",
+"https://bagof.crap.jp/coe/mv60/mv-kaisei.mp4|sm40325219|A子で「回生」",
+"https://bagof.crap.jp/coe/mv60/mv-yokuba.mp4|sm39656793|A子で「よくばり」",
+"https://bagof.crap.jp/coe/rel/vroid_rel_01c.mp4|sm43824892|B子C子D子で寸劇「ボイスを付けるテスト」",
+"https://bagof.crap.jp/coe/rel/vroid_rel_02.mp4|sm43840150|A子C子D子で寸劇「4人目のボイステスト」",
+];
