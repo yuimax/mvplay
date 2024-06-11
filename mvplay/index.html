@@ -61,7 +61,7 @@
             s15.style.color = (fps == 15) ? 'black' : 'transparent';
             localStorage.setItem('fps', fps);
             let q = normalize(params.get('q') ?? '');
-            in_q.value = q;
+            in_q.value = q.replace(/</, '｜').replace(/>/, '＆');
             if (q != '') q = '&q=' + q;
             mvframe.src = 'mvplay.html?fps=' + fps + q;
             a60.href = '?fps=60' + q;
