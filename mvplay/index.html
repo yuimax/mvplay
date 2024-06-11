@@ -8,14 +8,17 @@
         body {
             background: #f0f0f0;
         }
+
         a:hover {
             background: #e0e0ff;
         }
+
         div#main {
             width: 500px;
             max-width: 100%;
             margin: 0px auto 100px auto;
         }
+
         iframe#mvframe {
             width: 500px;
             height: 280px;
@@ -23,20 +26,24 @@
             margin-top: 8px;
             border: 1px solid gray;
         }
+
         @media screen and (max-width: 520px) {
             iframe#mvframe {
                 height: 390px;
             }
         }
+
         span.title {
             font-size: 125%;
             font-weight: bold;
             padding-right: 8px;
         }
+
         div.caption {
             font-weight: bold;
             margin-top: 10px;
         }
+
         input[type="text"] {
             width: 160px;
             margin-left: 16px;
@@ -51,8 +58,9 @@
             const q = (str == '') ? '' : '&q=' + str;
             location.replace(fps + q);
         }
-        // 初期化処理
-        function on_load() {
+        // 読み込み完了時に初期化処理
+        window.addEventListener('DOMContentLoaded', () => {
+            // 動画品質
             const params = new URLSearchParams(location.search);
             let fps = parseInt(params.get('fps') ?? localStorage.getItem('fps'));
             if (fps != 15 && fps != 30) fps = 60;
@@ -60,18 +68,20 @@
             s30.style.color = (fps == 30) ? 'black' : 'transparent';
             s15.style.color = (fps == 15) ? 'black' : 'transparent';
             localStorage.setItem('fps', fps);
+            // 検索文の取得
             let q = normalize(params.get('q') ?? '');
-            in_q.value = q.replace(/</, '｜').replace(/>/, '＆');
+            in_q.value = q.replace(/</g, '｜').replace(/>/g, '＆');
             if (q != '') q = '&q=' + q;
             mvframe.src = 'mvplay.html?fps=' + fps + q;
             a60.href = '?fps=60' + q;
             a30.href = '?fps=30' + q;
             a15.href = '?fps=15' + q;
             document.title = 'mvplay ' + fps + 'fps ' + in_q.value;
-            if (location.protocol == 'file:') xchg.href += 'index.html';
-        }
-        // 読み込み完了時に初期化を実行
-        window.addEventListener('DOMContentLoaded', on_load);
+            // Enterキーでも検索実行
+            in_q.addEventListener('keydown', (ev) => {
+                if (ev.key == 'Enter') btn_q.click();
+            });
+        });
     </script>
 </head>
 <body>
@@ -83,8 +93,8 @@
         <span id="s30">＞</span>[<a id="a30">低品質</a>] 30fps / 640x360p / 360kbps<br>
         <span id="s15">＞</span>[<a id="a15">無品質</a>] 15fps / 320x180p / 170kbps<br>
         <div class="caption">●タイトル検索</div>
-        <input id="in_q" type="text">
-        <button type="button" onclick="query();">検索する</button>
+        <input id="in_q" type="text" autofocus>
+        <button id="btn_q" type="button" onclick="query();">検索する</button>
         <button type="button" onclick="in_q.value='';query();">クリア</button>
     </div>
 </body>
