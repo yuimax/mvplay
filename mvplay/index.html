@@ -70,7 +70,7 @@
             localStorage.setItem('fps', fps);
             // 検索文の取得
             let q = normalize(params.get('q') ?? '');
-            in_q.value = q.replace(/</g, '｜').replace(/>/g, '＆');
+            in_q.value = q.replace(/</g, '｜').replace(/>/g, '＆').replace(/!/g, '！');
             if (q != '') q = '&q=' + q;
             mvframe.src = 'mvplay.html?fps=' + fps + q;
             a60.href = '?fps=60' + q;

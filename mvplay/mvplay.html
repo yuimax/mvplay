@@ -168,7 +168,7 @@
             }
             // 新しい先頭が前回の末尾と一致しないように調整
             if (opts[0] == tail) {
-                opts.shift(opts.pop());
+                opts.unshift(opts.pop());
             }
             // opts[]からfiles.optionsを再構築する
             for (let i = files.length - 1; i >= 0; i--) {
