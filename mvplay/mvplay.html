@@ -358,7 +358,7 @@
                 }
 
                 // 検索結果が全滅した場合
-                if (movies.filter(mv => mv.show).length == 0) {
+                if (movies.every(mv => !mv.show)) {
                     movies.push({
                         name: '',
                         file: './notfound.mp4',
