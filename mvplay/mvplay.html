@@ -7,9 +7,6 @@
     <script src="./mvplaylib.js"></script>
     <script src="./movie_data.js"></script>
     <script>
-        // 定数
-        const SHUFFLE_ON_INIT = false;
-
         // movie_data[] から movies[] を作成
         const movies = movie_data.map(function (data) {
             const [file, nico_id, name] = data.split('|');
@@ -145,7 +142,7 @@
             }
             files.innerHTML = opts;
             // シャッフル
-            if (SHUFFLE_ON_INIT) {
+            if (localStorage.getItem('loop') == 2) {
                 shuffle_files();
             }
             // 最初の動画を表示
@@ -420,7 +417,8 @@
             speed.addEventListener('change', function (e) { update_speed(); });
 
             // 周回 <select id="loop">
-            loop.selectedIndex = 0; // 初期値は「周回=なし」
+            loop.selectedIndex = localStorage.getItem('loop') ?? 0; // 初期値は「周回=なし」
+            loop.addEventListener('change', function (e) { localStorage.setItem('loop',loop.selectedIndex)}) ;
 
             // 自動停止 <select id="sleep">
             sleep.selectedIndex = 1; // 初期値は「自動停止=1時間」
