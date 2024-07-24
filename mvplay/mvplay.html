@@ -418,7 +418,7 @@
 
             // 周回 <select id="loop">
             loop.selectedIndex = localStorage.getItem('loop') ?? 0; // 初期値は「周回=なし」
-            loop.addEventListener('change', function (e) { localStorage.setItem('loop',loop.selectedIndex)}) ;
+            loop.addEventListener('change', function (e) { localStorage.setItem('loop', loop.selectedIndex) });
 
             // 自動停止 <select id="sleep">
             sleep.selectedIndex = 1; // 初期値は「自動停止=1時間」
