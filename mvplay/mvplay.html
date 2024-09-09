@@ -102,7 +102,10 @@
         // 音量を変える
         function set_volume(percent) {
             const v = Math.max(0, Math.min(1, percent / 100));
-            if (vid.volume != v) { vid.volume = v; }
+            if (vid.volume != v) {
+                vid.volume = v;
+            }
+            localStorage.setItem('vol', percent);
         }
 
         // 音量を上下する
@@ -142,8 +145,14 @@
             }
             files.innerHTML = opts;
             // シャッフル
-            if (localStorage.getItem('loop') == 2) {
-                shuffle_files();
+            switch (loop.selectedIndex) {
+                case 0: // 0:[入替なし/周回なし]
+                case 1: // 1:[入替なし/周回あり]
+                    break;
+                case 2: // 2:[入替あり/周回なし]
+                case 3: // 3:[入替あり/周回あり]
+                    shuffle_files();
+                    break;
             }
             // 最初の動画を表示
             files.selectedIndex = 0;
@@ -161,7 +170,9 @@
             const tail = opts.at(-1);
             for (let i = opts.length - 1; i >= 0; i--) {
                 let k = Math.floor(Math.random() * (i + 1));
-                [opts[i], opts[k]] = [opts[k], opts[i]];
+                let tmp = opts[i];
+                opts[i] = opts[k];
+                opts[k] = tmp;
             }
             // 新しい先頭が前回の末尾と一致しないように調整
             if (opts[0] == tail) {
@@ -223,13 +234,18 @@
             const idx = (files.selectedIndex + 1) % files.length;
             if (idx == 0) {
                 switch (loop.selectedIndex) {
-                    case 0: // 周回=しない
+                    case 0: // 入替なし/周回なし
                         last_cmd = 'pause';
                         document.exitFullscreen();
                         break;
-                    case 1: // 周回=あり
+                    case 1: // 入替なし/周回あり
                         break;
-                    case 2: // 周回=シャッフル
+                    case 2: // 入替あり/周回なし
+                        last_cmd = 'pause';
+                        document.exitFullscreen();
+                        shuffle_files();
+                        break;
+                    case 3: // 入替あり/周回あり
                         shuffle_files();
                         break;
                 }
@@ -372,10 +388,6 @@
             // URL引数をチェックする
             check_params();
 
-            // ファイルリスト <select id="files">
-            init_files();
-            files.addEventListener('change', function (e) { load_file(); });
-
             // 動画本体 <video id="vid">
             vid.addEventListener('loadstart', on_vid_loadstart);
             vid.addEventListener('loadeddata', on_vid_loadend);
@@ -402,6 +414,9 @@
             v_p01.addEventListener('click', function (e) { volume_updown(1); });
             v_p10.addEventListener('click', function (e) { volume_updown(10); });
 
+            // 音量初期化
+            set_volume(localStorage.getItem('vol') ?? 100); // デフォルトは 100%
+
             // 位置メーター <meter id="posmeter">
             init_meter('posmeter');
             posmeter.addEventListener('mousedown', on_posmeter_mousedown);
@@ -417,7 +432,7 @@
             speed.addEventListener('change', function (e) { update_speed(); });
 
             // 周回 <select id="loop">
-            loop.selectedIndex = localStorage.getItem('loop') ?? 0; // 初期値は「周回=なし」
+            loop.selectedIndex = localStorage.getItem('loop') ?? 0; // 初期値は「入替なし/周回なし」
             loop.addEventListener('change', function (e) { localStorage.setItem('loop', loop.selectedIndex) });
 
             // 自動停止 <select id="sleep">
@@ -425,6 +440,10 @@
 
             // 再生/停止ボタン <button id="bplay">
             bplay.addEventListener('click', function (e) { play_or_pause(); });
+
+            // ファイルリスト <select id="files">
+            init_files();
+            files.addEventListener('change', function (e) { load_file(); });
 
             // 表示初期化
             show_stat();
@@ -512,9 +531,10 @@
                 <option value="200">速度=200%</option>
             </select><br>
             <select id="loop" style="width: 144px; margin-bottom: 4px; ">
-                <option value="0">周回=しない</option>
-                <option value="1">周回=あり</option>
-                <option value="2">周回=シャッフル</option>
+                <option value="0">入替なし/周回なし</option>
+                <option value="1">入替なし/周回あり</option>
+                <option value="2">入替あり/周回なし</option>
+                <option value="3">入替あり/周回あり</option>
             </select><br>
             <select id="sleep" style="width: 144px; margin-bottom: 4px;">
                 <option value="1800">自動停止=30分</option>

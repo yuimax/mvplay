@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
-    <title>mvplay</title>
+    <title>my_title</title>
     <style>
         body {
             background: #f0f0f0;
@@ -81,12 +81,16 @@
             in_q.addEventListener('keydown', (ev) => {
                 if (ev.key == 'Enter') btn_q.click();
             });
+            // タイトル設定
+            const title = "mvplay v1.0";
+            document.title = title;
+            span_title.innerHTML = '■' + title;
         });
     </script>
 </head>
 <body>
     <div id="main">
-        <span class="title">■mvplay v1.0</span>
+        <span id="span_title" class="title">my_title</span>
         <iframe id="mvframe" scrolling="no" allowfullscreen></iframe>
         <div class="caption">●動画品質の選択</div>
         <span id="s60">＞</span>[<a id="a60">中品質</a>] 60fps / 1280x720p / 2Mbps<br>
